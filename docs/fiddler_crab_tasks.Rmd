@@ -11,6 +11,7 @@ library(tidyverse)
 library(here)
 library(janitor)
 library(kableExtra)
+library(ggrepel)
 ```
 
 ```{r include=FALSE}
@@ -47,3 +48,31 @@ summary_table_carp
   
 ```
 ### Table showing the mean, standard deviation and number of observations for crab carapace width by site
+
+```{r include=FALSE}
+summary_water <- fiddler_crab_clean %>% 
+  group_by(site) %>% 
+  summarize(mean_matw = mean(matw))
+
+summary_updated <- summary_carpace %>% 
+  left_join(summary_water)
+
+```
+
+
+```{r, echo= FALSE, fig.alt= "Scatter plot of mean carapace width by mean water temperature based on site showing carapace width decreasing with increased water temperature"}
+
+summary_plot <- ggplot(summary_updated, aes(x = mean_matw, y = mean)) +
+  geom_point() +
+  labs(title = "Mean carapace width by mean water temperature based on site", x = "Mean annual water temperature (degrees celsius)", y = "Mean carapace width (mm)") +
+  geom_text_repel(aes(label = site), size = 2.5) +
+  theme_minimal()
+  
+  
+
+summary_plot
+```
+
+### Mean carapace width by mean water temperature based on site along the U.S. east coast
+
+
