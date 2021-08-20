@@ -1,0 +1,19 @@
+---
+title: "Fiddler Crab Tasks"
+author: "Desik Somasundaram"
+date: "8/20/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+library(janitor)
+```
+
+```{r}
+fiddler_crab_sizes <- read_csv(here("data", "HTL-MAR-FiddlerCrabBodySize.csv" ))
+
+```
+
