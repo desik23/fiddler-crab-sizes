@@ -6,14 +6,28 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(here)
 library(janitor)
 ```
 
-```{r}
+```{r include=FALSE}
 fiddler_crab_sizes <- read_csv(here("data", "HTL-MAR-FiddlerCrabBodySize.csv" ))
 
 ```
+
+```{r include=FALSE}
+fiddler_crab_clean <- clean_names(fiddler_crab_sizes)
+
+```
+
+```{r, fig.alt= "Jitter plot of crab carapace width in millimeters at different latitudes showing that as latitude increases, carapace width tends to increase"}
+crabs_plot <- ggplot(fiddler_crab_clean, aes(x = latitude, y = carapace_width)) +
+  geom_jitter() + 
+  labs(title = "Carapace width of crabs at different latitudes", x = "Latitude", y = "Carapace width (mm)")
+
+crabs_plot
+```
+Jitter plot of crab carapace width (mm) in salt marshes from Florida to Massachusetts based on latitude
 
