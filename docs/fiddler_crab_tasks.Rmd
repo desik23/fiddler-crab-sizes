@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(here)
 library(janitor)
+library(kableExtra)
 ```
 
 ```{r include=FALSE}
@@ -29,5 +30,20 @@ crabs_plot <- ggplot(fiddler_crab_clean, aes(x = latitude, y = carapace_width)) 
 
 crabs_plot
 ```
-Jitter plot of crab carapace width (mm) in salt marshes from Florida to Massachusetts based on latitude
 
+### Jitter plot of crab carapace width (mm) in salt marshes from Florida to Massachusetts based on latitude
+
+```{r echo=FALSE}
+summary_carpace <- fiddler_crab_clean %>%
+  group_by(site) %>% 
+  summarize(mean = round(mean(carapace_width),2), sd = round(sd(carapace_width),2), n = n())
+
+summary_table_carp <- summary_carpace %>% 
+  kable(col.names = c("Site", "Mean of Carapace Width (mm)", "Standard Deviation (mm)", "Number of Observations")) %>%
+  kable_classic(full_width = FALSE)
+  
+  
+summary_table_carp
+  
+```
+### Table showing the mean, standard deviation and number of observations for crab carapace width by site
